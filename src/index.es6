@@ -1,5 +1,4 @@
 import revHash from'rev-hash'
-import revPath from'rev-path'
 import path from'path'
 import fs from'fs-extra'
 import glob from'glob'
@@ -16,6 +15,16 @@ export default function(options) {
   const outputDest = path.resolve(outputDir)
   const file = options.file
   const hash = options.hash || false
+
+  function revPath(pth, hash) {
+    let ext = '';
+    let baseFilename = path.basename(pth);
+    while (baseFilename && path.extname(baseFilename) !== '') {
+      ext = path.extname(baseFilename) + ext;
+      baseFilename = path.basename(pth, ext);
+    }
+    return path.join(path.dirname(pth), `${baseFilename}-${hash}${ext}`);
+  }
 
   function writeManifest(manifest) {
     if (file) {

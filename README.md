@@ -7,6 +7,18 @@
 ### why?
 `gulp-rev` and `grunt-rev` are great, but what if you want to just use package.json scripts for your dev and build process?
 
+### This Fork
+This fork makes a change to how a dependency works ('node-rev') and removes it with inplace code. It changes how "multi-extension" files get the hash appended.
+
+Before:
+```
+    bob.js.gz => bob.js-hash.gz
+```
+After:
+```
+    bob.js.gz => bob-hash.js.gz
+```
+
 ### node api
 ```
 import nodeRev from 'node-rev'
