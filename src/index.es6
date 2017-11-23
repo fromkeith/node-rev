@@ -43,7 +43,7 @@ export default function(options) {
 
   let baseDir
   if (filesPath.indexOf('**/*') > -1) {
-    baseDir = path.resolve(filesPath.substring(0, filesPath.indexOf('**/*')));
+    baseDir = path.resolve(filesPath.substring(0, filesPath.indexOf('**/*'))).replace(/\\/g, '/');
   } else if (files && files.length === 1) {
     baseDir = files[0].split('/').slice(0,-1).join('/')
   } else {
@@ -56,6 +56,9 @@ export default function(options) {
       const dirParts = parsedPath.dir.split('/')
       let fileDirParts = []
       while(dirParts.join('/') !== baseDir) {
+        if (dirParts.length === 0) {
+          throw new Error('Could not find root directory');
+        }
         fileDirParts.unshift(dirParts.pop())
       }
       let fileDir = fileDirParts.join('/')
