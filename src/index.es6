@@ -42,7 +42,9 @@ export default function(options) {
   })
 
   let baseDir
-  if (files && files.length === 1) {
+  if (filesPath.indexOf('**/*') > -1) {
+    baseDir = path.resolve(filesPath.substring(0, filesPath.indexOf('**/*')));
+  } else if (files && files.length === 1) {
     baseDir = files[0].split('/').slice(0,-1).join('/')
   } else {
     baseDir = commondir(files)
